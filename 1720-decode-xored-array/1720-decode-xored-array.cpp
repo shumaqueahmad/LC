@@ -5,7 +5,13 @@ public:
         ans[0]=first;
 
         for(int i=0; i<encoded.size();i++){
-            ans[i+1]=ans[i]^encoded[i];
+            if(ans[i]==encoded[i]){
+                ans[i+1]=0;
+            }
+            else{
+                ans[i+1]=ans[i]^encoded[i];
+            }
+            
         }
         return ans;
     }
