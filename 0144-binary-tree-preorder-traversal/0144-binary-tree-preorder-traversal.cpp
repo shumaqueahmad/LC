@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    void func(TreeNode* root, vector<int> &ans){
+    void func(TreeNode* root, vector<int> &ans){// using recursion
         if(root==nullptr){
             return;
         }
@@ -20,10 +20,27 @@ public:
         func(root->left,ans);
         func(root->right,ans);
     }
+    //ITERATIVE PREORDER TREAVERSALS
+    vector<int> itrpre(TreeNode* root,vector<int>& ans){
+        if(root==NULL) return ans;
+        stack<TreeNode* >st;
+        st.push(root);
+        TreeNode *temp;
+        while(!st.empty()){
+            temp=st.top();
+            st.pop();
+            ans.push_back(temp->val);
+            if(temp->right !=NULL) st.push(temp->right);
+            if(temp->left !=NULL) st.push(temp->left);
+        }
+        return ans;
+
+    }
     vector<int> preorderTraversal(TreeNode* root) {
        
         vector<int> ans;
-        func(root, ans);
-        return ans;
+        //func(root, ans);
+
+        return itrpre(root,ans);
     }
 };
