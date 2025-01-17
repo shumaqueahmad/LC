@@ -11,15 +11,13 @@
  */
 class Solution {
 public:
-    int psum(TreeNode* root, int& maxi){
-        if(root==NULL) return 0;
-        int l=max(0,psum(root->left, maxi));
-        int r=max(0,psum(root->right,maxi));
+    int psum(TreeNode* node,int& maxi){
+        if(node==NULL) return 0;
+        int lsum=psum(node->left,maxi);
+        int rsum=psum(node->right,maxi);
 
-        maxi=max(maxi, l+r+root->val);
-
-        return max(l,r)+root->val;
-
+        maxi=max(maxi, lsum+rsum+node->val);
+        return max(0,max(lsum,rsum)+node->val);
     }
     int maxPathSum(TreeNode* root) {
         
