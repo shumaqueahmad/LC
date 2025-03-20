@@ -25,7 +25,7 @@ public:
                 if(i==0 || i==n-1||j==0||j==m-1){
                     if(grid[i][j]==1){
                         q.push({i,j});
-
+                        vis[i][j]=1;
                     }
                 }
             }
@@ -34,13 +34,14 @@ public:
             int row= q.front().first;
             int col= q.front().second;
             q.pop();
-            vis[row][col]=1;
+            
 
             for(int i=0; i<4; i++){
             int nrow= row+delrow[i];
             int ncol= col+ delcol[i];
             if(nrow>=0&& nrow<n && ncol>=0 && ncol<m && vis[nrow][ncol]==0 && grid[nrow][ncol]==1){
                 q.push({nrow,ncol});
+                vis[nrow][ncol]=1;
             }
         }
         }
