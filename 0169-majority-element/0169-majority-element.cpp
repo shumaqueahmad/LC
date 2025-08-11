@@ -1,18 +1,22 @@
+#include <unordered_map>
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        int ele=0;
-        unordered_map<int,int> m1;
-        for(auto x:nums){
-            m1[x]++;
+
+        int n = nums.size();
+        std::unordered_map<int, int> frequencyMap;
+
+        for (const auto& count : nums) {
+            frequencyMap[count]++;
         }
-        int count=0;
-        for(auto x:m1){
-            if(x.second>count){
-                ele=x.first;
-                count=x.second;
+        int maxfreq = 0;
+        int maxelem = -1;
+        for (const auto& pair : frequencyMap) {
+            if (pair.second > maxfreq) {
+                maxfreq = pair.second;
+                maxelem = pair.first;
             }
         }
-        return ele;
+        return maxelem;
     }
 };
