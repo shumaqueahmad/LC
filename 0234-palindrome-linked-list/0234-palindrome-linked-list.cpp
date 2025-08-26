@@ -11,48 +11,32 @@
 class Solution {
 public:
     ListNode* reverse(ListNode* head){
-        ListNode* prev=NULL;
-        ListNode* temp=head;
-        ListNode* front= head->next;
-
-
-        while(temp!=NULL){
-            front= temp->next;
-            temp->next=prev;
-            prev= temp;
-            temp= front;
-        }
-
-        return prev;
+        if(!head || !head->next) return head;
+        ListNode* newhead=reverse(head->next);
+        ListNode* front=head->next;
+        front->next=head;
+        head->next=NULL;
+        return newhead;
     }
     bool isPalindrome(ListNode* head) {
-        if(head==NULL || head->next==NULL) return head;
-        ListNode* slow= head;
-        ListNode* fast= head;
-
-        while(fast->next!=NULL && fast->next->next!=NULL){ // o(n/2)
-            slow= slow->next;
-            fast= fast->next->next;
+        ListNode* fast=head;
+        ListNode* slow=head;
+        while(fast->next && fast->next->next){
+            fast=fast->next->next;
+            slow=slow->next;
         }
-
-        ListNode* head2= reverse(slow->next); //o(n/2)
-
-        ListNode* t1= head;
-        ListNode* t2= head2;
-
-        while(t2!=NULL){ //o(n/2)
-            if(t1->val != t2->val){
-                reverse(head2);
+        ListNode* head1=head;
+        ListNode* newhead=reverse(slow->next);
+        ListNode* head2=newhead;
+        while(head2!=NULL){
+            if(head1->val!=head2->val){
+                reverse(newhead);
                 return false;
             }
-            t1= t1->next;
-            t2= t2->next;
-
+            head1=head1->next;
+            head2=head2->next;
         }
-
-        reverse(head2); // reversing so that not to alter te data : o(n/2)
+        reverse(newhead);
         return true;
-
-
     }
 };
